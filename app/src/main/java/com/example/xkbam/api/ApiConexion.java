@@ -18,7 +18,7 @@ public class ApiConexion {
 
     private static OkHttpClient cliente;
     private static final String TAG = "APIConexion";
-    private static final String API_BASE_URL = "http://localhost:3000/api/";
+    private static final String API_BASE_URL = "http://10.0.2.2:3000/api/";
 
     public static OkHttpClient obtenerCliente() {
         if (cliente == null) {
@@ -82,4 +82,38 @@ public class ApiConexion {
             return null;
         }
     }
+
+
+    public static void enviarRequestAsincrono(String metodo, String endpoint, String jsonBody, boolean autenticacion, Callback callback) {
+        OkHttpClient client = autenticacion ? obtenerCliente() : obtenerClienteSinAutenticacion();
+
+        String url = API_BASE_URL + endpoint;
+
+        RequestBody body = null;
+        if (jsonBody != null) {
+            body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonBody);
+        }
+
+        Request.Builder builder = new Request.Builder()
+                .url(url);
+
+        if (autenticacion) {
+            builder.addHeader("Authorization", "Bearer " + SesionSingleton.getJWT());
+        }
+
+        if (metodo.equals("GET")) {
+            builder.get();
+        } else if (metodo.equals("POST")) {
+            builder.post(body);
+        } else if (metodo.equals("PUT")) {
+            builder.put(body);
+        } else if (metodo.equals("DELETE")) {
+            builder.delete();
+        }
+
+        Request request = builder.build();
+
+        client.newCall(request).enqueue(callback);
+    }
+
 }

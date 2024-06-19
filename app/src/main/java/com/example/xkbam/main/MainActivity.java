@@ -4,36 +4,56 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xkbam.R;
-import com.example.xkbam.main.MenuPrincipal; // Asegúrate de ajustar esto al nombre de tu segunda actividad
+import com.example.xkbam.DetallesUsuarioActivity; // Ensure this import is correct
+import com.example.xkbam.main.MenuPrincipal;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button loginButton;
+    private TextView newClientLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_login);
+        setContentView(R.layout.activity_main);
 
-        // Inicializar botón de login
+        // Initialize login button
         loginButton = findViewById(R.id.loginButton);
 
-        // Configurar onClickListener para el botón de login
+        // Set onClickListener for login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSecondActivity(); // Método para abrir la segunda actividad
+                openSecondActivity(); // Method to open the second activity
+            }
+        });
+
+        // Initialize new client label
+        newClientLabel = findViewById(R.id.newClientLabel);
+
+        // Set onClickListener for new client label
+        newClientLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewClientActivity(); // Method to open the new client activity
             }
         });
     }
 
-    // Método para abrir la segunda actividad
+    // Method to open the second activity
     private void openSecondActivity() {
-        Intent intent = new Intent(this, MenuPrincipal.class); // Ajusta el nombre de la actividad destino
+        Intent intent = new Intent(this, MenuPrincipal.class); // Adjust the target activity name
+        startActivity(intent);
+    }
+
+    // Method to open the new client activity
+    private void openNewClientActivity() {
+        Intent intent = new Intent(this, DetallesUsuarioActivity.class); // Adjust the target activity name
         startActivity(intent);
     }
 }
