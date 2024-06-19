@@ -21,6 +21,15 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
 
     private ActivityDetallesUsuarioBinding binding;
 
+    // Declare EditText variables as member variables
+    private EditText usernameEditText;
+    private EditText firstNameEditText;
+    private EditText paternoNameEditText;
+    private EditText maternoNameEditText;
+    private Spinner genderSpinner;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,14 +37,17 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
         binding = ActivityDetallesUsuarioBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Referencias a los campos de entrada
-        EditText usernameEditText = findViewById(R.id.username);
-        EditText firstNameEditText = findViewById(R.id.first_name);
-        EditText paternoNameEditText = findViewById(R.id.paterno_name);
-        EditText maternoNameEditText = findViewById(R.id.materno_name);
-        Spinner genderSpinner = findViewById(R.id.gender_spinner);
-        EditText emailEditText = findViewById(R.id.email);
-        EditText passwordEditText = findViewById(R.id.password);
+        // Initialize the EditText variables
+        usernameEditText = findViewById(R.id.username);
+        firstNameEditText = findViewById(R.id.first_name);
+        paternoNameEditText = findViewById(R.id.paterno_name);
+        maternoNameEditText = findViewById(R.id.materno_name);
+        genderSpinner = findViewById(R.id.gender_spinner);
+        emailEditText = findViewById(R.id.email);
+        passwordEditText = findViewById(R.id.password);
+
+        // Obtener los datos del usuario
+        obtenerDatosUsuario("diddydeuxANDROID");
 
         Button saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +123,61 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     mostrarDialogo("Error al crear JSON", e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void obtenerDatosUsuario(String usuario) {
+        ApiConexion.enviarRequestAsincrono("GET", "usuarios/" + usuario, null, false, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mostrarDialogo("Error al obtener datos", e.getMessage());
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        String responseBody = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        JSONObject usuarioObj = jsonObject.getJSONObject("usuario");
+                        JSONObject cuentaObj = jsonObject.getJSONObject("cuenta");
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    usernameEditText.setText(usuarioObj.getString("usuario"));
+                                    firstNameEditText.setText(usuarioObj.getString("nombre"));
+                                    paternoNameEditText.setText(usuarioObj.getString("apellidoPaterno"));
+                                    maternoNameEditText.setText(usuarioObj.getString("apellidoMaterno"));
+                                    genderSpinner.setSelection(usuarioObj.getInt("genero") == 1 ? 0 : 1);
+                                    emailEditText.setText(cuentaObj.getString("correo"));
+                                    passwordEditText.setText(""); // No se recomienda mostrar la contraseña real
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    mostrarDialogo("Error al procesar datos", e.getMessage());
+                                }
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        mostrarDialogo("Error al procesar datos", e.getMessage());
+                    }
+                } else {
+                    String responseBody = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mostrarDialogo("Error al obtener datos", responseBody);
+                        }
+                    });
                 }
             }
         });
