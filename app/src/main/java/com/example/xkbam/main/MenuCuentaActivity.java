@@ -15,6 +15,8 @@ public class MenuCuentaActivity extends AppCompatActivity {
 
         TextView addressTitle = findViewById(R.id.address_title);
         TextView accountTitle = findViewById(R.id.account_title);
+        TextView infoTitle = findViewById(R.id.info_title);
+
 
         addressTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +32,17 @@ public class MenuCuentaActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuCuentaActivity.this, DetallesBancariosActivity.class);
                 startActivity(intent);
+            }
+        });
+
+
+        infoTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuCuentaActivity.this, DetallesUsuarioActivity.class);
+                intent.putExtra("NUMBER", 2); // o 2, según sea necesario
+                startActivity(intent);
+
             }
         });
 

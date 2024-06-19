@@ -3,6 +3,7 @@ package com.example.xkbam;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
     private Spinner genderSpinner;
     private EditText emailEditText;
     private EditText passwordEditText;
+    private TextView passwordlabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,24 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
         genderSpinner = findViewById(R.id.gender_spinner);
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
-
-        // Obtener los datos del usuario
-        obtenerDatosUsuario("diddydeuxANDROID");
+        passwordlabel = findViewById(R.id.password_label);
 
         Button saveButton = findViewById(R.id.save_button);
+
+        // Obtain the intent and the number
+        int number = getIntent().getIntExtra("NUMBER", 0);
+
+        // Check the number and adjust visibility and actions accordingly
+        if (number == 1) {
+            saveButton.setVisibility(View.VISIBLE);
+        } else if (number == 2) {
+            saveButton.setVisibility(View.GONE);
+            obtenerDatosUsuario("diddydeuxANDROID");
+            passwordEditText.setVisibility(View.GONE);
+            passwordlabel.setVisibility(View.GONE);
+            usernameEditText.setEnabled(false);
+        }
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

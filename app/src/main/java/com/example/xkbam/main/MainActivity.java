@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to open the new client activity
     private void openNewClientActivity() {
-        Intent intent = new Intent(this, DetallesUsuarioActivity.class); // Adjust the target activity name
+        Intent intent = new Intent(this, DetallesUsuarioActivity.class);
+        intent.putExtra("NUMBER", 1); // o 2, según sea necesario
         startActivity(intent);
+
     }
 }
