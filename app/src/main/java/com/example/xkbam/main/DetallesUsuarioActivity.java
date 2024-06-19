@@ -50,6 +50,8 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
         passwordlabel = findViewById(R.id.password_label);
 
         Button saveButton = findViewById(R.id.save_button);
+        Button modifyButton = findViewById(R.id.modify_button);
+
 
         // Obtain the intent and the number
         int number = getIntent().getIntExtra("NUMBER", 0);
@@ -63,6 +65,7 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
             passwordEditText.setVisibility(View.GONE);
             passwordlabel.setVisibility(View.GONE);
             usernameEditText.setEnabled(false);
+            modifyButton.setVisibility(View.VISIBLE);
         }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -99,9 +102,8 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
                     dataJson.put("usuario", usuarioJson);
                     dataJson.put("cuenta", cuentaJson);
 
-                    // Mostrar JSON en un AlertDialog
-                    String jsonString = dataJson.toString(4); // Formato legible
-                    mostrarDialogo("JSON", jsonString);
+
+
 
                     // Enviar solicitud a la API
                     ApiConexion.enviarRequestAsincrono("POST", "usuarios", dataJson.toString(), false, new Callback() {
@@ -122,6 +124,8 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         Toast.makeText(DetallesUsuarioActivity.this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
+                                        finish();
+
                                     }
                                 });
                             } else {
@@ -141,6 +145,83 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        modifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtener los valores de los campos de entrada
+                String username = usernameEditText.getText().toString();
+                String firstName = firstNameEditText.getText().toString();
+                String paternoName = paternoNameEditText.getText().toString();
+                String maternoName = maternoNameEditText.getText().toString();
+                String gender = genderSpinner.getSelectedItem().toString();
+                String email = emailEditText.getText().toString();
+
+                // Convertir género a entero
+                int genderValue = gender.equals("Masculino") ? 1 : 2; // Ajusta según tus valores de género
+
+                // Crear JSON
+                JSONObject usuarioJson = new JSONObject();
+                JSONObject cuentaJson = new JSONObject();
+                JSONObject dataJson = new JSONObject();
+
+                try {
+                    usuarioJson.put("usuario", username); // Ajusta según corresponda
+                    usuarioJson.put("nombre", firstName);
+                    usuarioJson.put("apellidoPaterno", paternoName);
+                    usuarioJson.put("apellidoMaterno", maternoName);
+                    usuarioJson.put("genero", genderValue);
+
+                    cuentaJson.put("correo", email);
+                    cuentaJson.put("idRol", 2); // Ajusta según corresponda
+
+                    dataJson.put("usuario", usuarioJson);
+                    dataJson.put("cuenta", cuentaJson);
+
+
+
+                    // Enviar solicitud a la API
+                    ApiConexion.enviarRequestAsincrono("PUT", "usuarios/" + username, dataJson.toString(), true, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mostrarDialogo("Error al enviar datos", e.getMessage());
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.isSuccessful()) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(DetallesUsuarioActivity.this, "Datos modificados correctamente", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                });
+                            } else {
+                                String responseBody = response.body().string();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mostrarDialogo("Error al modificar datos", responseBody);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    mostrarDialogo("Error al crear JSON", e.getMessage());
+                }
+            }
+        });
+
+
     }
 
     private void obtenerDatosUsuario(String usuario) {
