@@ -60,11 +60,10 @@
                 android:id="@+id/card_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:hint=""
-                android:inputType="number"
-                android:layout_marginTop="8dp" />
+                android:inputType="text" />
 
-            <!-- Campo para titular de la tarjeta -->
             <TextView
                 android:id="@+id/card_holder_label"
                 android:layout_width="wrap_content"
@@ -79,7 +78,6 @@
                 android:id="@+id/card_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre del Titular"
                 android:layout_marginTop="8dp" />
 
             <!-- Campo para CVV -->
@@ -117,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=""
-                android:inputType="date"
+                android:inputType="text"
                 android:layout_marginTop="8dp" />
 
             <TextView
@@ -135,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=""
-                android:inputType="date"
+                android:inputType="number"
                 android:layout_marginTop="8dp" />
 
 
