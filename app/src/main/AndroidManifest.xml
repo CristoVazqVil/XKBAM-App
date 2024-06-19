@@ -16,10 +16,10 @@
         android:theme="@style/Theme.XKBAM"
         tools:targetApi="31">
         <activity
-            android:name=".ReporteVentasActivity"
+            android:name=".main.ReporteVentasActivity"
             android:exported="false" />
         <activity
-            android:name=".DetallesArticuloActivity"
+            android:name=".main.DetallesArticuloActivity"
             android:exported="false" />
         <activity
             android:name=".MenuCuentaActivity"

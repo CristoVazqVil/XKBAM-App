@@ -1,14 +1,16 @@
-package com.example.xkbam;
+package com.example.xkbam.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class ReporteVentasActivity extends AppCompatActivity {
+import com.example.xkbam.R;
+
+public class DetallesArticuloActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reporte_ventas);
+        setContentView(R.layout.activity_detalles_articulo);
     }
 }
