@@ -8,7 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xkbam.R;
-import com.example.xkbam.main.MenuPrincipal; // Asegúrate de ajustar esto al nombre de tu segunda actividad
+import com.example.xkbam.main.MenuPrincipal;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_login);
+        setContentView(R.layout.activity_main);
 
         // Inicializar botón de login
         loginButton = findViewById(R.id.loginButton);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Método para abrir la segunda actividad
     private void openSecondActivity() {
-        Intent intent = new Intent(this, MenuPrincipal.class); // Ajusta el nombre de la actividad destino
+        Intent intent = new Intent(this, MenuPrincipal .class); // Ajusta el nombre de la actividad destino
         startActivity(intent);
     }
 }
