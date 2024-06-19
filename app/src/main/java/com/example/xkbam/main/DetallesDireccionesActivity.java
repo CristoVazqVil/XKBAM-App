@@ -1,7 +1,6 @@
 package com.example.xkbam;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class DetallesDireccionesActivity extends AppCompatActivity {

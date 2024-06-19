@@ -1,7 +1,6 @@
 package com.example.xkbam.dto;
 
 public class DireccionDTO {
-    private int idDireccion;
     private String estado;
     private String municipio;
     private String codigoPostal;
@@ -10,14 +9,6 @@ public class DireccionDTO {
     private String usuario;
 
     // Getters and Setters
-    public int getIdDireccion() {
-        return idDireccion;
-    }
-
-    public void setIdDireccion(int idDireccion) {
-        this.idDireccion = idDireccion;
-    }
-
     public String getEstado() {
         return estado;
     }

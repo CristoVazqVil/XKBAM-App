@@ -1,5 +1,6 @@
 package com.example.xkbam.main;
 
+import android.content.Intent; // Add this import statement
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.xkbam.R;
+import com.example.xkbam.MenuCuentaActivity; // Import MenuCuentaActivity
 
 public class MenuPrincipal extends AppCompatActivity {
 
@@ -82,7 +84,8 @@ public class MenuPrincipal extends AppCompatActivity {
         navItemCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción para la opción "Cuenta"
+                Intent intent = new Intent(MenuPrincipal.this, MenuCuentaActivity.class);
+                startActivity(intent);
             }
         });
     }
