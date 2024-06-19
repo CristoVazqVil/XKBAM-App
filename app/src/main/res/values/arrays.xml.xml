@@ -3,6 +3,5 @@
     <string-array name="gender_options">
         <item>Masculino</item>
         <item>Femenino</item>
-        <item>No binario</item>
     </string-array>
 </resources>

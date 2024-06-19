@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Contenido principal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#390202">
+
+            <!-- Top Bar -->
+            <LinearLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@color/black">
+
+                <!-- Opciones -->
+                <ImageView
+                    android:id="@+id/imgOpciones"
+                    android:layout_width="66dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="Opciones"
+                    android:src="@drawable/opciones" />
+
+                <!-- Logo -->
+                <ImageView
+                    android:id="@+id/imgHome"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:contentDescription="Home"
+                    android:src="@drawable/logo" />
+
+                <!-- Carrito -->
+                <ImageView
+                    android:id="@+id/imgCarrito"
+                    android:layout_width="64dp"
+                    android:layout_marginTop="85dp"
+                    android:layout_height="53dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Carrito"
+                    android:src="@drawable/carrito" />
+            </LinearLayout>
+
+            <!-- Media Element (Video o Imagen) -->
+            <ImageView
+                android:id="@+id/mdeVideo"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp"
+                android:src="@drawable/valkyrae"
+                android:scaleType="centerCrop"/>
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/lblTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="Junji ito  X  Xkbam"
+                android:textColor="@android:color/white"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/lblArticulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ingrese nombre del artículo:"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/txbArticulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:hint="Ingrese nombre del artículo"
+                    android:padding="8dp"/>
+
+                <Button
+                    android:id="@+id/btnBuscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"/>
+            </LinearLayout>
+
+            <!-- Botones (Agregar Artículo y Ventas) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/imgAñadirArtículo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/agregar"
+                    android:contentDescription="Agregar artículo"/>
+
+                <TextView
+                    android:id="@+id/lblAgregar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar artículo"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="16dp"/>
+
+                <ImageView
+                    android:id="@+id/imgVentas"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/agregar"
+                    android:contentDescription="Historial de ventas"
+                    android:layout_marginStart="64dp"/>
+
+                <TextView
+                    android:id="@+id/lblVentas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Historial de ventas"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="16dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Menú lateral de opciones -->
+        <LinearLayout
+            android:id="@+id/navMenu"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+            android:background="@android:color/black">
+
+            <TextView
+                android:id="@+id/navItemTodo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Todo"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemSuperiores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Superiores"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemInferiores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Inferiores"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemAccesorios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Accesorios"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemConjuntos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conjuntos"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <ImageView
+                android:id="@+id/imgCerrarOpciones"
+                android:layout_width="37dp"
+                android:layout_height="32dp"
+                android:src="@drawable/cerrar"
+                android:contentDescription="Cerrar menú"
+                android:padding="16dp"
+                android:layout_gravity="end"/>
+
+            <TextView
+                android:id="@+id/navItemCuenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuenta"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="300dp"/>
+        </LinearLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>
