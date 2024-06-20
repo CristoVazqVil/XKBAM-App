@@ -1,6 +1,7 @@
 package com.example.xkbam.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.example.xkbam.R;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.dto.ArticuloDTO;
 import com.example.xkbam.dto.MultimediaDTO;
+import com.example.xkbam.main.DetallesArticulo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -57,6 +59,15 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.Articu
 
         // Cargar la imagen del artículo usando la API y OkHttp
         cargarImagenArticulo(articulo.getCodigoArticulo(), holder.imgArticulo);
+
+        // Configurar OnClickListener para abrir DetallesArticulo
+        holder.imgArticulo.setOnClickListener(v -> {
+            // Crear un Intent para abrir DetallesArticulo
+            Intent intent = new Intent(context, DetallesArticulo.class);
+            // Pasar el código del artículo como extra
+            intent.putExtra("codigoArticulo", articulo.getCodigoArticulo());
+            context.startActivity(intent);
+        });
     }
 
     @Override
