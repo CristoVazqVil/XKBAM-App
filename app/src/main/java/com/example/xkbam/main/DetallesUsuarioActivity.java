@@ -11,6 +11,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.databinding.ActivityDetallesUsuarioBinding;
+import com.example.xkbam.utilidades.SesionSingleton;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import okhttp3.Call;
@@ -61,7 +63,7 @@ public class DetallesUsuarioActivity extends AppCompatActivity {
             saveButton.setVisibility(View.VISIBLE);
         } else if (number == 2) {
             saveButton.setVisibility(View.GONE);
-            obtenerDatosUsuario("diddydeuxANDROID");
+            obtenerDatosUsuario(SesionSingleton.getInstance().getUsuario());
             passwordEditText.setVisibility(View.GONE);
             passwordlabel.setVisibility(View.GONE);
             usernameEditText.setEnabled(false);

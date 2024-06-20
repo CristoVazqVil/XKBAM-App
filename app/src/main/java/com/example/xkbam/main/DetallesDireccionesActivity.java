@@ -1,7 +1,6 @@
 package com.example.xkbam;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,18 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.dto.DireccionDTO;
-
+import com.example.xkbam.utilidades.SesionSingleton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -62,12 +58,11 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
             }
         });
 
-        // Recuperar la información de las direcciones del usuario
         obtenerDireccionesDelUsuario();
     }
 
     private void obtenerDireccionesDelUsuario() {
-        String usuario = "diddydeuxANDROID"; // Aquí debes obtener el usuario actualmente logueado
+        String usuario = SesionSingleton.getInstance().getUsuario();
 
         ApiConexion.enviarRequestAsincrono("GET", "direcciones/" + usuario, null, true, new Callback() {
             @Override
@@ -86,7 +81,7 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
                             direccionesList.add(jsonResponse.getJSONObject(i));
                         }
                         if (direccionesList.size() == 1) {
-                            direccionesList.add(new JSONObject()); // Agregar dirección en blanco
+                            direccionesList.add(new JSONObject());
                         }
                         cargarSpinnerDirecciones();
                     } catch (JSONException e) {
@@ -127,11 +122,9 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
             }
         });
 
-        // Cargar la primera dirección por defecto
         if (!direccionesList.isEmpty()) {
             cargarDatosDireccion(direccionesList.get(0));
         }
@@ -144,7 +137,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
             etCodigoPostal.setText(direccion.has("codigoPostal") ? direccion.getString("codigoPostal") : "");
             etCalle.setText(direccion.has("calle") ? direccion.getString("calle") : "");
             etNumeroExterno.setText(direccion.has("numeroExterno") ? direccion.getString("numeroExterno") : "");
-
             idDireccionSeleccionada = direccion.has("idDireccion") ? direccion.getString("idDireccion") : null;
 
             if (etEstado.getText().toString().trim().isEmpty()) {
@@ -166,9 +158,8 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
         String codigoPostal = etCodigoPostal.getText().toString().trim();
         String calle = etCalle.getText().toString().trim();
         String numeroExternoStr = etNumeroExterno.getText().toString().trim();
-        String usuario = "diddydeuxANDROID"; // Aquí debes obtener el usuario actualmente logueado
+        String usuario = SesionSingleton.getInstance().getUsuario();
 
-        // Validación básica de campos
         if (estado.isEmpty() || municipio.isEmpty() || codigoPostal.isEmpty() || calle.isEmpty() || numeroExternoStr.isEmpty()) {
             Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             return;
@@ -182,7 +173,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
             return;
         }
 
-        // Crear objeto DireccionDTO
         DireccionDTO direccionDTO = new DireccionDTO();
         direccionDTO.setEstado(estado);
         direccionDTO.setMunicipio(municipio);
@@ -191,7 +181,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
         direccionDTO.setNumeroExterno(numeroExterno);
         direccionDTO.setUsuario(usuario);
 
-        // Convertir a JSON
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("estado", direccionDTO.getEstado());
@@ -206,7 +195,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
             return;
         }
 
-        // Enviar solicitud a la API
         ApiConexion.enviarRequestAsincrono("POST", "direcciones", jsonObject.toString(), true, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -219,7 +207,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     try {
                         JSONObject jsonResponse = new JSONObject(responseData);
-                        // Aquí puedes manejar la respuesta de la API según necesites
                         Toast.makeText(DetallesDireccionesActivity.this, "Dirección guardada correctamente", Toast.LENGTH_SHORT).show();
                         finish();
                     } catch (JSONException e) {
@@ -237,9 +224,8 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
         String codigoPostal = etCodigoPostal.getText().toString().trim();
         String calle = etCalle.getText().toString().trim();
         String numeroExternoStr = etNumeroExterno.getText().toString().trim();
-        String usuario = "diddydeuxANDROID"; // Aquí debes obtener el usuario actualmente logueado
+        String usuario = SesionSingleton.getInstance().getUsuario();
 
-        // Validación básica de campos
         if (estado.isEmpty() || municipio.isEmpty() || codigoPostal.isEmpty() || calle.isEmpty() || numeroExternoStr.isEmpty()) {
             Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
             return;
@@ -253,7 +239,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
             return;
         }
 
-        // Crear objeto DireccionDTO
         DireccionDTO direccionDTO = new DireccionDTO();
         direccionDTO.setEstado(estado);
         direccionDTO.setMunicipio(municipio);
@@ -262,7 +247,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
         direccionDTO.setNumeroExterno(numeroExterno);
         direccionDTO.setUsuario(usuario);
 
-        // Convertir a JSON
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("estado", direccionDTO.getEstado());
@@ -282,7 +266,6 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
             return;
         }
 
-        // Enviar solicitud a la API
         ApiConexion.enviarRequestAsincrono("PUT", "direcciones/" + idDireccionSeleccionada, jsonObject.toString(), true, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -295,8 +278,8 @@ public class DetallesDireccionesActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     try {
                         JSONObject jsonResponse = new JSONObject(responseData);
-                        // Aquí puedes manejar la respuesta de la API según necesites
                         Toast.makeText(DetallesDireccionesActivity.this, "Dirección modificada correctamente", Toast.LENGTH_SHORT).show();
+                        finish();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(DetallesDireccionesActivity.this, "Dirección modificada correctamente", Toast.LENGTH_SHORT).show();

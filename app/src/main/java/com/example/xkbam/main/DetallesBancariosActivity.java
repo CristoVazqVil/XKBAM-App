@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.dto.TarjetaBancariaDTO;
+import com.example.xkbam.utilidades.SesionSingleton;
+
 import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import org.json.JSONException;
@@ -30,7 +32,7 @@ public class DetallesBancariosActivity extends AppCompatActivity {
 
     private EditText etCardNumber, etCardHolder, etCVV, etExpiryDate;
     private Button btnSave,btnModify;
-    private String usuario = "diddydeuxANDROID"; // Obtener el usuario actualmente logueado
+    private String usuario = SesionSingleton.getInstance().getUsuario(); // Obtener el usuario actualmente logueado
     private String tarjetaModificada = "";
 
     @Override
@@ -125,7 +127,7 @@ public class DetallesBancariosActivity extends AppCompatActivity {
         String titular = etCardHolder.getText().toString().trim();
         String cvv = etCVV.getText().toString().trim();
         String fechaExpiracionStr = etExpiryDate.getText().toString().trim();
-        String usuario = "diddydeuxANDROID"; // Aquí debes obtener el usuario actualmente logueado
+        String usuario = SesionSingleton.getInstance().getUsuario(); // Aquí debes obtener el usuario actualmente logueado
 
         // Validación básica de campos
         if (numeroTarjeta.isEmpty() || titular.isEmpty() || cvv.isEmpty() || fechaExpiracionStr.isEmpty()) {
@@ -190,6 +192,7 @@ public class DetallesBancariosActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(responseData);
                             // Aquí puedes manejar la respuesta de la API según necesites
                             Toast.makeText(DetallesBancariosActivity.this, "Detalles bancarios guardados correctamente", Toast.LENGTH_SHORT).show();
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(DetallesBancariosActivity.this, "Error al procesar respuesta", Toast.LENGTH_SHORT).show();
@@ -239,13 +242,6 @@ public class DetallesBancariosActivity extends AppCompatActivity {
             return;
         }
 
-// Mostrar el JSON en un AlertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("JSON a enviar");
-        builder.setMessage(jsonObject.toString());
-        builder.setPositiveButton("OK", null); // Botón OK sin acción adicional
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
 
 // Enviar solicitud a la API para actualizar detalles bancarios
         ApiConexion.enviarRequestAsincrono("PUT", "cuentasbancarias/" + numeroTarjeta, jsonObject.toString(), true, new Callback() {
@@ -271,7 +267,8 @@ public class DetallesBancariosActivity extends AppCompatActivity {
                             Toast.makeText(DetallesBancariosActivity.this, "Detalles bancarios actualizados correctamente", Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(DetallesBancariosActivity.this, "Error al procesar respuesta", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetallesBancariosActivity.this, "Detalles bancarios actualizados correctamente", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     }
                 });

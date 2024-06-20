@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.xkbam.utilidades.SesionSingleton;
+
 public class MenuCuentaActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +19,7 @@ public class MenuCuentaActivity extends AppCompatActivity {
         TextView accountTitle = findViewById(R.id.account_title);
         TextView infoTitle = findViewById(R.id.info_title);
         TextView logOutTitle = findViewById(R.id.log_out_title);  // Nuevo TextView para cerrar sesión
+
 
         addressTitle.setOnClickListener(new View.OnClickListener() {
             @Override
