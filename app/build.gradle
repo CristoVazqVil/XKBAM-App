@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 android {
-    namespace 'com.example.xkbam'
+    namespace 'com.example.xkbamproject'
     compileSdk 34
 
     defaultConfig {
@@ -12,7 +13,6 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -22,20 +22,46 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    buildFeatures{
-        dataBinding = true
+    buildFeatures {
+        dataBinding true
         viewBinding true
+    }
+
+    // Configuración para generar archivos de protobuf
+    protobuf {
+        protoc {
+            artifact = "com.google.protobuf:protoc:3.25.1"
+        }
+        plugins {
+            grpc {
+                artifact = 'io.grpc:protoc-gen-grpc-java:1.64.0'
+            }
+        }
+        generateProtoTasks {
+            all().each { task ->
+                task.builtins {
+                    java {
+                        option 'lite'
+                    }
+                }
+                task.plugins {
+                    grpc {
+                        option 'lite'
+                    }
+                }
+            }
+        }
     }
 }
 
 dependencies {
-
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -46,4 +72,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Dependencias de gRPC
+    implementation 'io.grpc:grpc-okhttp:1.64.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.64.0'
+    implementation 'io.grpc:grpc-stub:1.64.0'
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+
+    // Dependencia Protobuf
+    implementation 'com.google.protobuf:protobuf-javalite:3.21.12'
 }
+

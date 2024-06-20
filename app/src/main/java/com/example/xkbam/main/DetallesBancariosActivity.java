@@ -1,4 +1,4 @@
-package com.example.xkbam;
+package com.example.xkbam.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.example.xkbam.R;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.dto.TarjetaBancariaDTO;
 import androidx.appcompat.app.AlertDialog;

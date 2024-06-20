@@ -1,4 +1,4 @@
-package com.example.xkbam;
+package com.example.xkbam.main;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.xkbam.R;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.databinding.ActivityDetallesUsuarioBinding;
 import org.json.JSONException;

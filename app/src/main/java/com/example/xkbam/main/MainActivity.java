@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xkbam.R;
-import com.example.xkbam.DetallesUsuarioActivity; // Ensure this import is correct
+import com.example.xkbam.main.DetallesUsuarioActivity; // Ensure this import is correct
 import com.example.xkbam.main.MenuPrincipal;
 
 public class MainActivity extends AppCompatActivity {

@@ -59,13 +59,6 @@
                 android:padding="16dp">
 
 
-                <ImageView
-                    android:id="@+id/item_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="240sp"
-                    android:src="@drawable/placeholder"
-                    />
-
                 <TextView
                     android:id="@+id/item_info_title"
                     android:layout_width="wrap_content"
@@ -76,6 +69,13 @@
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/item_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="240sp"
+                    android:src="@drawable/placeholder"
+                    />
 
                 <TextView
                     android:id="@+id/item_code_label"
@@ -92,7 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="XKART01"
-                    android:inputType="number"
+                    android:maxLength="10"
+                    android:inputType="text"
                     android:layout_marginTop="8dp" />
 
 
@@ -111,6 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Sudadera de evangelion"
+                    android:maxLength="50"
                     android:layout_marginTop="8dp" />
 
 
@@ -129,7 +131,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Artículo resultado de la colaboración..."
-                    android:inputType="number"
+                    android:maxLength="300"
+                    android:inputType="text"
                     android:layout_marginTop="8dp" />
 
 
@@ -174,11 +177,12 @@
                     android:layout_marginTop="16dp"/>
 
                 <EditText
-                    android:id="@+id/expiry_date"
+                    android:id="@+id/price_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="200"
-                    android:inputType="date"
+                    android:inputType="number"
+                    android:maxLength="4"
                     android:layout_marginTop="8dp" />
 
 

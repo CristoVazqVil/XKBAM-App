@@ -16,35 +16,29 @@
         android:theme="@style/Theme.XKBAM"
         tools:targetApi="31">
         <activity
+            android:name=".ModificarArticuloActivity"
+            android:exported="false" />
+        <activity
             android:name=".main.ReporteVentasActivity"
             android:exported="false" />
         <activity
             android:name=".main.DetallesArticuloActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuCuentaActivity"
+            android:name=".main.MenuCuentaActivity"
             android:exported="false" />
         <activity
-            android:name=".DetallesDireccionesActivity"
+            android:name=".main.DetallesDireccionesActivity"
             android:exported="false" />
         <activity
-            android:name=".DetallesBancariosActivity"
+            android:name=".main.DetallesBancariosActivity"
             android:exported="false" />
         <activity
-            android:name=".DetallesBancariosUsuarioActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DetallesUsuarioActivity"
+            android:name=".main.DetallesUsuarioActivity"
             android:exported="false"
             android:label="@string/title_activity_detalles_usuario" />
         <activity
             android:name=".main.MenuPrincipal"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
-            android:exported="false" />
-        <activity
-            android:name=".MenuCuentaActivity"
             android:exported="false" />
         <activity
             android:name=".main.MainActivity"

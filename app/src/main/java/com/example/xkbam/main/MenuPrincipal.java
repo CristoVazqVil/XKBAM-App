@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.xkbam.R;
-import com.example.xkbam.MenuCuentaActivity; // Import MenuCuentaActivity
+import com.example.xkbam.main.MenuCuentaActivity; // Import MenuCuentaActivity
 
 public class MenuPrincipal extends AppCompatActivity {
 
@@ -85,6 +85,26 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuPrincipal.this, MenuCuentaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        ImageView imgAnadirArticulo = findViewById(R.id.imgAñadirArtículo);
+        ImageView imgReporteVentas = findViewById(R.id.imgVentas);
+
+        imgAnadirArticulo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuPrincipal.this, DetallesArticuloActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        imgReporteVentas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuPrincipal.this, ReporteVentasActivity.class);
                 startActivity(intent);
             }
         });

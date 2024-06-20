@@ -82,13 +82,11 @@
                     android:textStyle="bold"
                     android:layout_marginTop="16dp" />
 
-                <EditText
+                <DatePicker
                     android:id="@+id/start_date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="2022-12-12"
-                    android:inputType="date"
-                    android:layout_marginTop="8dp" />
+                    android:layout_height="wrap_content" />
+
 
 
                 <TextView
@@ -101,17 +99,10 @@
                     android:textStyle="bold"
                     android:layout_marginTop="16dp" />
 
-                <EditText
+                <DatePicker
                     android:id="@+id/end_date"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="2022-12-23"
-                    android:inputType="date"
-                    android:layout_marginTop="8dp" />
-
-
-
-
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/generate_report_button"

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "com.proto.xkbamproject";
+option java_outer_classname = "MultimediaProto";
+
+
+service MultimediaService {
+    rpc uploadMultimedia(stream UploadMultimediaRequest) returns (UploadMultimediaResponse);
+    rpc generateReport(GenerateReportRequest) returns (GenerateReportResponse);
+}
+
+message GenerateReportRequest {
+    string startDate = 1;
+    string endDate = 2;
+}
+
+message GenerateReportResponse {
+    bytes data = 1;
+    string name = 2;
+}
+
+message UploadMultimediaRequest {
+    oneof request {
+        string item = 1;
+        string nombre = 2;
+        bytes data = 3;
+    }
+}
+
+message UploadMultimediaResponse {
+    string response = 1;
+}
