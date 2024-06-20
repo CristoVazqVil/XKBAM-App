@@ -1,5 +1,7 @@
 package com.example.xkbam.main;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.Intent; // Add this import statement
 import android.os.Bundle;
 import android.view.View;
@@ -49,35 +51,45 @@ public class MenuPrincipal extends AppCompatActivity {
         navItemTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción para la opción "Todo"
+                Intent intent = new Intent(MenuPrincipal.this, MenuArticulos.class);
+                intent.putExtra("categoria", "todos");
+                startActivity(intent);
             }
         });
 
         navItemSuperiores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción para la opción "Superiores"
+                Intent intent = new Intent(MenuPrincipal.this, MenuArticulos.class);
+                intent.putExtra("categoria", "superiores");
+                startActivity(intent);
             }
         });
 
         navItemInferiores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción para la opción "Inferiores"
+                Intent intent = new Intent(MenuPrincipal.this, MenuArticulos.class);
+                intent.putExtra("categoria", "inferiores");
+                startActivity(intent);
             }
         });
 
         navItemAccesorios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción para la opción "Accesorios"
+                Intent intent = new Intent(MenuPrincipal.this, MenuArticulos.class);
+                intent.putExtra("categoria", "accesorios");
+                startActivity(intent);
             }
         });
 
         navItemConjuntos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción para la opción "Conjuntos"
+                Intent intent = new Intent(MenuPrincipal.this, MenuArticulos.class);
+                intent.putExtra("categoria", "conjuntos");
+                startActivity(intent);
             }
         });
 
