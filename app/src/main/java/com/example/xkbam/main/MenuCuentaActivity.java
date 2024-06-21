@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xkbam.main.MainActivity;
 import com.example.xkbam.utilidades.SesionSingleton;
 
 public class MenuCuentaActivity extends AppCompatActivity {
@@ -84,13 +85,10 @@ public class MenuCuentaActivity extends AppCompatActivity {
     }
 
     private void cerrarSesion() {
-<<<<<<< Updated upstream
 
-=======
         Intent intent = new Intent(MenuCuentaActivity.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         MenuCuentaActivity.this.finish();
->>>>>>> Stashed changes
     }
 }
