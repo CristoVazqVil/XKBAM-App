@@ -137,6 +137,25 @@ public class MenuPrincipal extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ImageView imgAnadirArticulo = findViewById(R.id.imgAñadirArtículo);
+        ImageView imgReporteVentas = findViewById(R.id.imgVentas);
+
+        imgAnadirArticulo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuPrincipal.this, RegistrarArticuloActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        imgReporteVentas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuPrincipal.this, ReporteVentasActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void buscarArticuloPorTermino(String termino) {
@@ -201,4 +220,5 @@ public class MenuPrincipal extends AppCompatActivity {
         intent.putExtra("codigoArticulo", codigoArticulo);
         startActivity(intent);
     }
+
 }

@@ -19,7 +19,7 @@
             android:name=".main.ReporteVentasActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistrarArticuloActivity"
+            android:name=".main.RegistrarArticuloActivity"
             android:exported="false" />
         <activity
             android:name=".main.CompraRealizada"

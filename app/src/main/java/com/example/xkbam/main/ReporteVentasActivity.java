@@ -2,6 +2,7 @@ package com.example.xkbam.main;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.documentfile.provider.DocumentFile;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,10 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.xkbam.R;
 import com.example.xkbam.utilidades.ClienteGrpc;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -83,10 +87,48 @@ public class ReporteVentasActivity extends AppCompatActivity {
     }
 
     private void saveReportToSelectedDirectory(Uri directoryUri) {
+        String startDate = getDateFromDatePicker(startDatePicker);
+        String endDate = getDateFromDatePicker(endDatePicker);
 
-        String selectedDirectoryPath = directoryUri.toString();
-        Log.d(TAG, "Saving report to directory: " + selectedDirectoryPath);
+        String fileName = "Reporte_Ventas_" + startDate + "_" + endDate + ".txt";
 
-        clienteGrpc.generateReportAsync(getDateFromDatePicker(startDatePicker), getDateFromDatePicker(endDatePicker), selectedDirectoryPath, ReporteVentasActivity.this);
+        DocumentFile pickedDir = DocumentFile.fromTreeUri(this, directoryUri);
+        DocumentFile file = pickedDir.createFile("text/plain", fileName);
+
+        try {
+            if (file != null) {
+                FileOutputStream fos = new FileOutputStream(getContentResolver().openFileDescriptor(file.getUri(), "w").getFileDescriptor());
+                String reportContent = generateReport(startDate, endDate);
+                fos.write(reportContent.getBytes());
+                fos.close();
+                Toast.makeText(this, "Reporte guardado correctamente", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No se pudo crear el archivo en la ubicación seleccionada", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al guardar el reporte", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private String generateReport(String startDate, String endDate) {
+        // Aquí puedes generar el contenido del reporte en formato de texto
+        StringBuilder reportBuilder = new StringBuilder();
+        reportBuilder.append("Reporte de ventas desde ")
+                .append(startDate)
+                .append(" hasta ")
+                .append(endDate)
+                .append("\n\n");
+
+        // Ejemplo de contenido del reporte
+        reportBuilder.append("Total ventas: $5000\n");
+        reportBuilder.append("Total clientes nuevos: 20\n");
+        reportBuilder.append("Productos más vendidos: \n");
+        reportBuilder.append("- Camisas: 50 unidades\n");
+        reportBuilder.append("- Pantalones: 30 unidades\n");
+
+        return reportBuilder.toString();
+    }
+
+
 }
