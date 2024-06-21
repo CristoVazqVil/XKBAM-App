@@ -11,13 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Contenido principal -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- Top Bar -->
             <LinearLayout
                 android:id="@+id/topBar"
                 android:layout_width="match_parent"
@@ -26,7 +24,6 @@
                 android:gravity="center_vertical"
                 android:background="@color/black">
 
-                <!-- Opciones -->
                 <ImageView
                     android:id="@+id/imgOpciones"
                     android:layout_width="66dp"
@@ -35,7 +32,6 @@
                     android:contentDescription="Opciones"
                     android:src="@drawable/opciones" />
 
-                <!-- Logo -->
                 <ImageView
                     android:id="@+id/imgHome"
                     android:layout_width="250dp"
@@ -44,7 +40,6 @@
                     android:contentDescription="Home"
                     android:src="@drawable/logo" />
 
-                <!-- Carrito -->
                 <ImageView
                     android:id="@+id/imgCarrito"
                     android:layout_width="64dp"
@@ -56,7 +51,6 @@
                     android:src="@drawable/carrito" />
             </LinearLayout>
 
-            <!-- Contenido del artículo -->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -67,7 +61,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Imagen del artículo -->
                     <ImageView
                         android:id="@+id/imgArticulo"
                         android:layout_width="match_parent"
@@ -75,7 +68,6 @@
                         android:contentDescription="Imagen del artículo"
                         android:src="@drawable/placeholder" />
 
-                    <!-- Nombre del artículo -->
                     <TextView
                         android:id="@+id/txtNombreArticulo"
                         android:layout_width="wrap_content"
@@ -84,7 +76,6 @@
                         android:textSize="24sp"
                         android:layout_marginTop="8dp" />
 
-                    <!-- Descripción del artículo -->
                     <TextView
                         android:id="@+id/txtDescripcionArticulo"
                         android:layout_width="wrap_content"
@@ -93,7 +84,6 @@
                         android:textSize="16sp"
                         android:layout_marginTop="8dp" />
 
-                    <!-- Precio del artículo -->
                     <TextView
                         android:id="@+id/txtPrecioArticulo"
                         android:layout_width="wrap_content"
@@ -103,21 +93,18 @@
                         android:layout_marginTop="8dp"
                         android:textColor="@color/black" />
 
-                    <!-- Talla del artículo -->
                     <Spinner
                         android:id="@+id/spinnerTallas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp" />
 
-                    <!-- Cantidad del artículo -->
                     <Spinner
                         android:id="@+id/spinnerCantidad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp" />
 
-                    <!-- Botón añadir al carrito -->
                     <Button
                         android:id="@+id/btnAñadirCarrito"
                         android:layout_width="wrap_content"
@@ -125,7 +112,6 @@
                         android:text="Añadir al carrito"
                         android:layout_marginTop="16dp" />
 
-                    <!-- Contenedor de opiniones -->
                     <LinearLayout
                         android:id="@+id/contOpiniones"
                         android:layout_width="match_parent"
@@ -140,7 +126,6 @@
                             android:textSize="18sp"
                             android:layout_marginBottom="8dp" />
 
-                        <!-- Aquí se agregarán las opiniones -->
                         <LinearLayout
                             android:id="@+id/stkOpiniones"
                             android:layout_width="match_parent"
@@ -149,7 +134,6 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Comentario -->
                     <EditText
                         android:id="@+id/txtComentario"
                         android:layout_width="match_parent"
@@ -157,14 +141,12 @@
                         android:hint="Escribe tu comentario"
                         android:layout_marginTop="16dp" />
 
-                    <!-- Calificación -->
                     <Spinner
                         android:id="@+id/spinnerCalificacion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp" />
 
-                    <!-- Botón enviar opinión -->
                     <Button
                         android:id="@+id/btnEnviarOpinion"
                         android:layout_width="wrap_content"
@@ -172,7 +154,6 @@
                         android:text="Enviar opinión"
                         android:layout_marginTop="16dp" />
 
-                    <!-- Botón modificar artículo (solo visible para rol 1) -->
                     <Button
                         android:id="@+id/btnModificarArticulo"
                         android:layout_width="wrap_content"
@@ -184,7 +165,6 @@
             </ScrollView>
         </LinearLayout>
 
-        <!-- Menú lateral -->
         <LinearLayout
             android:id="@+id/navMenu"
             android:layout_width="280dp"

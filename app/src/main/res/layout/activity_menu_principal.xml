@@ -11,14 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Contenido principal -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="#390202">
 
-            <!-- Top Bar -->
             <LinearLayout
                 android:id="@+id/topBar"
                 android:layout_width="match_parent"
@@ -27,7 +25,6 @@
                 android:gravity="center_vertical"
                 android:background="@color/black">
 
-                <!-- Opciones -->
                 <ImageView
                     android:id="@+id/imgOpciones"
                     android:layout_width="66dp"
@@ -36,7 +33,6 @@
                     android:contentDescription="Opciones"
                     android:src="@drawable/opciones" />
 
-                <!-- Logo -->
                 <ImageView
                     android:id="@+id/imgHome"
                     android:layout_width="250dp"
@@ -45,7 +41,6 @@
                     android:contentDescription="Home"
                     android:src="@drawable/logo" />
 
-                <!-- Carrito -->
                 <ImageView
                     android:id="@+id/imgCarrito"
                     android:layout_width="64dp"
@@ -57,7 +52,6 @@
                     android:src="@drawable/carrito" />
             </LinearLayout>
 
-            <!-- Media Element (Video o Imagen) -->
             <ImageView
                 android:id="@+id/mdeVideo"
                 android:layout_width="wrap_content"
@@ -67,7 +61,6 @@
                 android:src="@drawable/valkyrae"
                 android:scaleType="centerCrop"/>
 
-            <!-- Título -->
             <TextView
                 android:id="@+id/lblTitulo"
                 android:layout_width="wrap_content"
@@ -114,7 +107,6 @@
                     android:layout_marginTop="16dp"/>
             </LinearLayout>
 
-            <!-- Botones (Agregar Artículo y Ventas) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,7 +152,6 @@
 
         </LinearLayout>
 
-        <!-- Menú lateral de opciones -->
         <LinearLayout
             android:id="@+id/navMenu"
             android:layout_width="280dp"

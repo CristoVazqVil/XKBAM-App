@@ -9,7 +9,6 @@ public class ArticuloCompraDTO {
     private int idCompra;
     private int idTalla;
 
-    // Constructor vacío necesario para Gson
     public ArticuloCompraDTO() {
     }
 

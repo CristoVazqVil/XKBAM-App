@@ -56,4 +56,9 @@ public class DireccionDTO {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+
+    @Override
+    public String toString() {
+        return getCalle() + ", " + getNumeroExterno() + ", " + getEstado(); // Ejemplo: Calle Ejemplo 123, Ciudad, Estado
+    }
 }

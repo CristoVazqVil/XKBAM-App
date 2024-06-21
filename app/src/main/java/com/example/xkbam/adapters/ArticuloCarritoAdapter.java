@@ -77,7 +77,7 @@ public class ArticuloCarritoAdapter extends RecyclerView.Adapter<ArticuloCarrito
 
     class ArticuloViewHolder extends RecyclerView.ViewHolder {
         private TextView nombreArticulo;
-        private EditText cantidadArticulo; // Cambiando a EditText
+        private EditText cantidadArticulo;
         private TextView precioArticulo;
 
         public ArticuloViewHolder(@NonNull View itemView) {

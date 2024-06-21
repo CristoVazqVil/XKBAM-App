@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.xkbam.R;
 import com.example.xkbam.api.ApiConexion;
@@ -44,6 +45,7 @@ public class DetallesArticulo extends AppCompatActivity {
     private TextView txtNombreArticulo, txtDescripcionArticulo, txtPrecioArticulo;
     private Spinner spinnerTallas, spinnerCantidad, spinnerCalificacion;
     private EditText txtComentario;
+    private DrawerLayout drawerLayout;
     private LinearLayout stkOpiniones;
     private Button btnAñadirCarrito, btnEnviarOpinion, btnModificarArticulo;
     private ArticuloDTO articulo;
@@ -55,7 +57,6 @@ public class DetallesArticulo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_articulo);
 
-        // Initialize views
         imgArticulo = findViewById(R.id.imgArticulo);
         txtNombreArticulo = findViewById(R.id.txtNombreArticulo);
         txtDescripcionArticulo = findViewById(R.id.txtDescripcionArticulo);
@@ -69,7 +70,6 @@ public class DetallesArticulo extends AppCompatActivity {
         btnEnviarOpinion = findViewById(R.id.btnEnviarOpinion);
         btnModificarArticulo = findViewById(R.id.btnModificarArticulo);
 
-        // Set up spinners
         ArrayAdapter<String> tallasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"Seleccione una talla", "XS", "S", "M", "L", "XL"});
         spinnerTallas.setAdapter(tallasAdapter);
 
@@ -79,15 +79,12 @@ public class DetallesArticulo extends AppCompatActivity {
         ArrayAdapter<Integer> calificacionesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new Integer[]{0, 1, 2, 3, 4, 5});
         spinnerCalificacion.setAdapter(calificacionesAdapter);
 
-        // Get article code from intent
         String codigoArticulo = getIntent().getStringExtra("codigoArticulo");
 
-        // Load article details, opinions and cart ID
         loadArticuloData(codigoArticulo);
         loadOpiniones(codigoArticulo);
         obtenerIdCarrito();
 
-        // Hide modify button if user role is not allowed
         if (SesionSingleton.getInstance().getRol() == 2) {
             btnModificarArticulo.setVisibility(View.GONE);
         }
@@ -117,15 +114,95 @@ public class DetallesArticulo extends AppCompatActivity {
         });
 
         btnModificarArticulo.setOnClickListener(v -> {
-            // Implement logic to modify the article
+            // modificar
         });
 
         ImageView imgCarrito = findViewById(R.id.imgCarrito);
         imgCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Abrir la actividad del carrito aquí
                 startActivity(new Intent(DetallesArticulo.this, Carrito.class));
+            }
+        });
+
+        ImageView imgOpciones = findViewById(R.id.imgOpciones);
+        imgOpciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(findViewById(R.id.navMenu));
+            }
+        });
+
+        ImageView imgCerrarOpciones = findViewById(R.id.imgCerrarOpciones);
+        imgCerrarOpciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(findViewById(R.id.navMenu));
+            }
+        });
+
+        TextView navItemTodo = findViewById(R.id.navItemTodo);
+        TextView navItemSuperiores = findViewById(R.id.navItemSuperiores);
+        TextView navItemInferiores = findViewById(R.id.navItemInferiores);
+        TextView navItemAccesorios = findViewById(R.id.navItemAccesorios);
+        TextView navItemConjuntos = findViewById(R.id.navItemConjuntos);
+        TextView navItemCuenta = findViewById(R.id.navItemCuenta);
+
+        navItemTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetallesArticulo.this, MenuArticulos.class);
+                intent.putExtra("categoria", "todos");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemSuperiores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetallesArticulo.this, MenuArticulos.class);
+                intent.putExtra("categoria", "superiores");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemInferiores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetallesArticulo.this, MenuArticulos.class);
+                intent.putExtra("categoria", "inferiores");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemAccesorios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetallesArticulo.this, MenuArticulos.class);
+                intent.putExtra("categoria", "accesorios");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemConjuntos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetallesArticulo.this, MenuArticulos.class);
+                intent.putExtra("categoria", "conjuntos");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetallesArticulo.this, MenuCuentaActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -246,12 +323,11 @@ public class DetallesArticulo extends AppCompatActivity {
                 TextView txtUsuarioYCalificacion = new TextView(DetallesArticulo.this);
                 txtUsuarioYCalificacion.setText(opinion.getUsuario() + "   " + getStarRating(opinion.getCalificacion()));
                 txtUsuarioYCalificacion.setTextSize(18);
-                txtUsuarioYCalificacion.setTextColor(getResources().getColor(android.R.color.black)); // Cambiar a un color visible
-
+                txtUsuarioYCalificacion.setTextColor(getResources().getColor(android.R.color.black));
                 TextView txtComentario = new TextView(DetallesArticulo.this);
                 txtComentario.setText("Comentario: " + opinion.getComentario());
                 txtComentario.setTextSize(14);
-                txtComentario.setTextColor(getResources().getColor(android.R.color.black)); // Cambiar a un color visible
+                txtComentario.setTextColor(getResources().getColor(android.R.color.black));
 
                 stkOpiniones.addView(txtUsuarioYCalificacion);
                 stkOpiniones.addView(txtComentario);
@@ -276,7 +352,6 @@ public class DetallesArticulo extends AppCompatActivity {
     private void añadirArticuloAlCarrito(String codigoArticulo, String tallaSeleccionada, int cantidadSeleccionada) {
         int idTalla = obtenerIdTalla(tallaSeleccionada);
 
-        // Crear objeto para enviar al servidor
         Map<String, Object> jsonBody = new HashMap<>();
         jsonBody.put("codigoArticulo", codigoArticulo);
         jsonBody.put("cantidadArticulo", cantidadSeleccionada);
@@ -320,7 +395,6 @@ public class DetallesArticulo extends AppCompatActivity {
     }
 
     private void enviarOpinion(String codigoArticulo, String comentario, int calificacion) {
-        // Crear objeto para enviar al servidor
         Map<String, Object> jsonBody = new HashMap<>();
         jsonBody.put("codigoArticulo", codigoArticulo);
         jsonBody.put("comentario", comentario);

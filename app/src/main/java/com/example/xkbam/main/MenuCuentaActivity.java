@@ -1,10 +1,14 @@
-package com.example.xkbam;
+package com.example.xkbam.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.xkbam.DetallesDireccionesActivity;
+import com.example.xkbam.DetallesUsuarioActivity;
+import com.example.xkbam.R;
 
 public class MenuCuentaActivity extends AppCompatActivity {
 

@@ -9,11 +9,9 @@ public class ArticuloCarritoDTO {
     private int idCarrito;
     private int idTalla;
 
-    // Constructor vacío necesario para Gson
     public ArticuloCarritoDTO() {
     }
 
-    // Getters y setters
     public int getIdArticuloCarrito() {
         return idArticuloCarrito;
     }

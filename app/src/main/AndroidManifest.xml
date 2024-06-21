@@ -16,6 +16,12 @@
         android:theme="@style/Theme.XKBAM"
         tools:targetApi="31">
         <activity
+            android:name=".main.CompraRealizada"
+            android:exported="false" />
+        <activity
+            android:name=".main.Pago"
+            android:exported="false" />
+        <activity
             android:name=".main.Carrito"
             android:exported="false" />
         <activity

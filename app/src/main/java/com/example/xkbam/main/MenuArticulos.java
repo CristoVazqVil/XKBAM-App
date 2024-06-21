@@ -1,11 +1,15 @@
 package com.example.xkbam.main;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,8 +43,6 @@ public class MenuArticulos extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private RecyclerView recyclerViewArticulos;
     private ArticuloAdapter articuloAdapter;
-
-    // Mapa para almacenar las imágenes temporalmente
     private Map<String, Bitmap> imagenesArticulos = new HashMap<>();
 
     @Override
@@ -54,6 +56,96 @@ public class MenuArticulos extends AppCompatActivity {
 
         String categoria = getIntent().getStringExtra("categoria");
         cargarDatos(categoria);
+
+        ImageView imgCarrito = findViewById(R.id.imgCarrito);
+        imgCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuArticulos.this, Carrito.class));
+            }
+        });
+
+        ImageView imgOpciones = findViewById(R.id.imgOpciones);
+        imgOpciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(findViewById(R.id.navMenu));
+            }
+        });
+
+        ImageView imgCerrarOpciones = findViewById(R.id.imgCerrarOpciones);
+        imgCerrarOpciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(findViewById(R.id.navMenu));
+            }
+        });
+
+        TextView navItemTodo = findViewById(R.id.navItemTodo);
+        TextView navItemSuperiores = findViewById(R.id.navItemSuperiores);
+        TextView navItemInferiores = findViewById(R.id.navItemInferiores);
+        TextView navItemAccesorios = findViewById(R.id.navItemAccesorios);
+        TextView navItemConjuntos = findViewById(R.id.navItemConjuntos);
+        TextView navItemCuenta = findViewById(R.id.navItemCuenta);
+
+        navItemTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuArticulos.this, MenuArticulos.class);
+                intent.putExtra("categoria", "todos");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemSuperiores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuArticulos.this, MenuArticulos.class);
+                intent.putExtra("categoria", "superiores");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemInferiores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuArticulos.this, MenuArticulos.class);
+                intent.putExtra("categoria", "inferiores");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemAccesorios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuArticulos.this, MenuArticulos.class);
+                intent.putExtra("categoria", "accesorios");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemConjuntos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuArticulos.this, MenuArticulos.class);
+                intent.putExtra("categoria", "conjuntos");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuArticulos.this, MenuCuentaActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void cargarDatos(String categoria) {
@@ -72,7 +164,6 @@ public class MenuArticulos extends AppCompatActivity {
                     Type articuloListType = new TypeToken<List<ArticuloDTO>>() {}.getType();
                     List<ArticuloDTO> articuloList = gson.fromJson(responseBody, articuloListType);
 
-                    // Cargar las imágenes para cada artículo
                     for (ArticuloDTO articulo : articuloList) {
                         cargarImagenArticulo(articulo);
                     }
@@ -94,7 +185,6 @@ public class MenuArticulos extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e("MenuArticulos", "Error al obtener imagen para artículo " + codigoArticulo, e);
-                // Manejar el error si no se puede obtener la imagen
             }
 
             @Override
@@ -108,15 +198,12 @@ public class MenuArticulos extends AppCompatActivity {
                         List<MultimediaDTO> multimediaList = gson.fromJson(responseBody, multimediaListType);
 
                         if (multimediaList != null && !multimediaList.isEmpty()) {
-                            // Aquí obtienes el primer elemento del arreglo, ajusta según tus necesidades
                             byte[] imageData = multimediaList.get(0).getContenido().getData();
                             Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
 
                             runOnUiThread(() -> {
-                                // Almacenar la imagen temporalmente
                                 imagenesArticulos.put(codigoArticulo, bitmap);
 
-                                // Notificar al adapter sobre el cambio en los datos
                                 if (articuloAdapter != null) {
                                     articuloAdapter.notifyDataSetChanged();
                                 }
@@ -127,7 +214,6 @@ public class MenuArticulos extends AppCompatActivity {
                     }
                 } else {
                     Log.e("MenuArticulos", "Error al cargar imagen para artículo " + codigoArticulo);
-                    // Manejar el error si no se puede cargar la imagen
                 }
             }
         });

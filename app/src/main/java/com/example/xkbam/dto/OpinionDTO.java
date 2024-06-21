@@ -7,7 +7,6 @@ public class OpinionDTO {
     private int calificacion;
     private String usuario;
 
-    // Constructor
     public OpinionDTO(String codigoArticulo, String comentario, int calificacion, String usuario) {
         this.codigoArticulo = codigoArticulo;
         this.comentario = comentario;

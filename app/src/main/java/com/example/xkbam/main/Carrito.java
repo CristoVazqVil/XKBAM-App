@@ -1,13 +1,16 @@
 package com.example.xkbam.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,6 +70,53 @@ public class Carrito extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 actualizarArticulosEnCarrito();
+            }
+        });
+
+        TextView navItemTodo = findViewById(R.id.navItemTodo);
+        TextView navItemSuperiores = findViewById(R.id.navItemSuperiores);
+        TextView navItemInferiores = findViewById(R.id.navItemInferiores);
+        TextView navItemAccesorios = findViewById(R.id.navItemAccesorios);
+        TextView navItemConjuntos = findViewById(R.id.navItemConjuntos);
+        TextView navItemCuenta = findViewById(R.id.navItemCuenta);
+
+        navItemTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Carrito.this, MenuArticulos.class);
+                intent.putExtra("categoria", "todos");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemSuperiores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Carrito.this, MenuArticulos.class);
+                intent.putExtra("categoria", "superiores");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemInferiores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Carrito.this, MenuArticulos.class);
+                intent.putExtra("categoria", "inferiores");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        navItemAccesorios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Carrito.this, MenuArticulos.class);
+                intent.putExtra("categoria", "accesorios");
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -152,8 +202,6 @@ public class Carrito extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         String responseBody = response.body().string();
-
-                        // Utiliza un TypeToken para deserializar correctamente
                         Type listType = new TypeToken<List<ArticuloCarritoDTO>>(){}.getType();
                         articulos = new Gson().fromJson(responseBody, listType);
 
@@ -203,7 +251,6 @@ public class Carrito extends AppCompatActivity {
 
         for (ArticuloCarritoDTO articulo : articulosCopy) {
             if (articulo.getCantidadArticulo() == 0) {
-                // Eliminar artículo del carrito si la cantidad es 0
                 ApiConexion.enviarRequestAsincrono("DELETE", "carritos/vaciar/" + articulo.getIdArticuloCarrito(), null, true, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -227,7 +274,6 @@ public class Carrito extends AppCompatActivity {
                             });
                             Log.e(TAG, "Error al vaciar el artículo del carrito: " + response.code() + " " + response.message());
                         } else {
-                            // Eliminar el artículo de la lista local
                             articulos.remove(articulo);
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -240,7 +286,6 @@ public class Carrito extends AppCompatActivity {
                     }
                 });
             } else {
-                // Actualizar la cantidad del artículo en el carrito
                 Gson gson = new Gson();
                 String jsonArticulo = gson.toJson(articulo);
 
@@ -280,8 +325,6 @@ public class Carrito extends AppCompatActivity {
                 });
             }
         }
-
-        // Actualizar total y mostrar mensaje de éxito
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -290,7 +333,6 @@ public class Carrito extends AppCompatActivity {
             }
         });
 
-        // Recargar los artículos después de actualizar
         cargarArticulos();
     }
 
@@ -312,7 +354,9 @@ public class Carrito extends AppCompatActivity {
     }
 
     private void abrirVentanaCompra() {
-        // Lógica para abrir la ventana de compra
-        Toast.makeText(this, "Abrir ventana de compra", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, Pago.class);
+        intent.putExtra("idCarrito", idCarrito);
+        startActivity(intent);
+        finish();
     }
 }

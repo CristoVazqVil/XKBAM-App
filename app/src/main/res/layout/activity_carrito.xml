@@ -11,13 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Contenido principal -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- Top Bar -->
             <LinearLayout
                 android:id="@+id/topBar"
                 android:layout_width="match_parent"
@@ -26,37 +24,17 @@
                 android:gravity="center_vertical"
                 android:background="@color/black">
 
-                <!-- Opciones -->
-                <ImageView
-                    android:id="@+id/imgOpciones"
-                    android:layout_width="66dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:contentDescription="Opciones"
-                    android:src="@drawable/opciones" />
-
-                <!-- Logo -->
                 <ImageView
                     android:id="@+id/imgHome"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="2dp"
                     android:contentDescription="Home"
                     android:src="@drawable/logo" />
 
-                <!-- Carrito -->
-                <ImageView
-                    android:id="@+id/imgCarrito"
-                    android:layout_width="64dp"
-                    android:layout_marginTop="85dp"
-                    android:layout_height="53dp"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="16dp"
-                    android:contentDescription="Carrito"
-                    android:src="@drawable/carrito" />
+
             </LinearLayout>
 
-            <!-- Etiqueta Carrito -->
             <TextView
                 android:id="@+id/labelCarrito"
                 android:layout_width="match_parent"
@@ -67,14 +45,12 @@
                 android:gravity="center_horizontal"
                 android:layout_marginTop="5dp"/>
 
-            <!-- Línea divisoria -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@android:color/black"
                 android:layout_margin="16dp"/>
 
-            <!-- Tabla de Artículos -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewCarrito"
                 android:layout_width="match_parent"
@@ -83,7 +59,6 @@
                 android:padding="16dp"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Total -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +86,6 @@
                     android:gravity="end"/>
             </LinearLayout>
 
-            <!-- Botones -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +110,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Menú lateral de opciones -->
         <LinearLayout
             android:id="@+id/navMenu"
             android:layout_width="280dp"

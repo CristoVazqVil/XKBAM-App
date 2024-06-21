@@ -36,14 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize EditText fields
         userTextBox = findViewById(R.id.userTextBox);
         passwordBox = findViewById(R.id.passwordBox);
 
-        // Initialize login button
         loginButton = findViewById(R.id.loginButton);
-
-        // Set onClickListener for login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,28 +51,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Initialize new client label
         newClientLabel = findViewById(R.id.newClientLabel);
 
-        // Set onClickListener for new client label
         newClientLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewClientActivity(); // Method to open the new client activity
+                openNewClientActivity();
             }
         });
     }
 
-    // Method to open the second activity
     private void openSecondActivity() {
         Intent intent = new Intent(this, MenuPrincipal.class);
         startActivity(intent);
+        finish();
     }
 
-    // Method to open the new client activity
     private void openNewClientActivity() {
         Intent intent = new Intent(this, DetallesUsuarioActivity.class);
-        intent.putExtra("NUMBER", 1); // o 2, según sea necesario
+        intent.putExtra("NUMBER", 1);
         startActivity(intent);
     }
 
@@ -119,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                         runOnUiThread(() -> {
                             Toast.makeText(MainActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                            openSecondActivity(); // Navigate to the main menu
+                            openSecondActivity();
                         });
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -57,14 +57,10 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.Articu
         holder.txtNombreArticulo.setText(articulo.getNombre());
         holder.txtPrecioArticulo.setText(String.format("$%.2f", articulo.getPrecio()));
 
-        // Cargar la imagen del artículo usando la API y OkHttp
         cargarImagenArticulo(articulo.getCodigoArticulo(), holder.imgArticulo);
 
-        // Configurar OnClickListener para abrir DetallesArticulo
         holder.imgArticulo.setOnClickListener(v -> {
-            // Crear un Intent para abrir DetallesArticulo
             Intent intent = new Intent(context, DetallesArticulo.class);
-            // Pasar el código del artículo como extra
             intent.putExtra("codigoArticulo", articulo.getCodigoArticulo());
             context.startActivity(intent);
         });
@@ -107,12 +103,10 @@ public class ArticuloAdapter extends RecyclerView.Adapter<ArticuloAdapter.Articu
 
                         if (multimediaList != null && !multimediaList.isEmpty()) {
                             byte[] imageData = multimediaList.get(0).getContenido().getData();
-                            // Decodificar el byte array en un Bitmap
                             BitmapFactory.Options options = new BitmapFactory.Options();
-                            options.inMutable = true; // Permitir la mutabilidad del bitmap
+                            options.inMutable = true;
                             Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length, options);
 
-                            // Cargar la imagen en el ImageView usando Glide en el hilo principal
                             new Handler(Looper.getMainLooper()).post(() -> {
                                 Glide.with(context)
                                         .load(bitmap)
