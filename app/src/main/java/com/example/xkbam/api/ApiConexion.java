@@ -18,7 +18,7 @@ public class ApiConexion {
 
     private static OkHttpClient cliente;
     private static final String TAG = "APIConexion";
-    private static final String API_BASE_URL = "http://10.0.2.2:3000/api/";
+    private static final String API_BASE_URL = "http://192.168.17.135:3000/api/";
 
     public static OkHttpClient obtenerCliente() {
         if (cliente == null) {

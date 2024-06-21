@@ -53,7 +53,7 @@
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".MenuCuentaActivity"
+            android:name=".main.MenuCuentaActivity"
             android:exported="false" />
         <activity
             android:name=".main.MainActivity"
