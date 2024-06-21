@@ -1,6 +1,8 @@
 package com.example.xkbam.dto;
 
-public class ArticuloDTO {
+import java.io.Serializable;
+
+public class ArticuloDTO implements Serializable {
     private String codigoArticulo;
     private String nombre;
     private String descripcion;

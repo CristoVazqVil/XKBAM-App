@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,6 +27,7 @@ import com.example.xkbam.R;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.dto.ArticuloDTO;
 import com.example.xkbam.dto.TarjetaBancariaDTO;
+import com.example.xkbam.utilidades.ClienteGrpc;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,13 +39,14 @@ import okhttp3.Response;
 public class DetallesArticuloActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE = 2;
-    private String selectedCategory;
-    private String selectedColor;
-
+    private String selectedCategory, selectedColor;
     private EditText textCodigo, textNombre, textDescripcion, textPrecio;
     private Spinner spinnerCategoria, spinnerColor;
     private Button botonGuardar;
     private ImageView imgArticulo;
+    private ArticuloDTO articuloExistente;
+    private ClienteGrpc clienteGrpc;
+    private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +71,8 @@ public class DetallesArticuloActivity extends AppCompatActivity {
             }
         });
 
+        clienteGrpc = new ClienteGrpc("10.0.2.2:8080");
 
-        // Crear una lista de categorías para el Spinner
         List<String> categorias = new ArrayList<>();
         categorias.add("Superiores");
         categorias.add("Inferiores");
@@ -126,22 +129,30 @@ public class DetallesArticuloActivity extends AppCompatActivity {
         botonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validarInformacion()){
-                    Toast.makeText(DetallesArticuloActivity.this, "Información válida. Registrando artículo...",
+                if (validarInformacion()) {
+                    Toast.makeText(DetallesArticuloActivity.this, "Información válida. Procesando...",
                             Toast.LENGTH_SHORT).show();
-                    registrarArticulo();
-
+                    if (articuloExistente != null) {
+                        actualizarArticulo();
+                    } else {
+                        registrarArticulo();
+                    }
                 }
             }
         });
+
+        if (getIntent().hasExtra("articulo")) {
+            articuloExistente = (ArticuloDTO) getIntent().getSerializableExtra("articulo");
+            llenarCamposConDatosExistentes(articuloExistente);
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
+            selectedImageUri = data.getData();
             ImageView imageView = findViewById(R.id.item_image);
-            imageView.setImageURI(selectedImage);
+            imageView.setImageURI(selectedImageUri);
         }
     }
 
@@ -193,10 +204,93 @@ public class DetallesArticuloActivity extends AppCompatActivity {
 
 
 
-    private void registrarArticulo(){
-        String nombreArticulo =  textNombre.getText().toString().trim();
+    private void registrarArticulo() {
+        ArticuloDTO articuloDTO = crearArticuloDesdeCampos();
+        JSONObject jsonObject = crearJsonDesdeArticulo(articuloDTO);
+
+        ApiConexion.enviarRequestAsincrono("POST", "articulo", jsonObject.toString(),
+                false, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(DetallesArticuloActivity.this, "Error al enviar solicitud",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String responseData = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(responseData);
+                                    if (selectedImageUri != null) {
+                                        String imagePath = getPathFromUri(selectedImageUri);
+                                        String nombreArticulo = articuloDTO.getNombre();
+                                        String itemId = articuloDTO.getCodigoArticulo();
+                                        clienteGrpc.uploadMultimediaAsync(itemId, nombreArticulo, imagePath);
+                                    }
+                                    Toast.makeText(DetallesArticuloActivity.this,
+                                            "Artículo registrado correctamente", Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(DetallesArticuloActivity.this,
+                                            "Error al procesar respuesta", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+    }
+
+    private void actualizarArticulo() {
+        ArticuloDTO articuloDTO = crearArticuloDesdeCampos();
+        articuloDTO.setCodigoArticulo(articuloExistente.getCodigoArticulo());
+        JSONObject jsonObject = crearJsonDesdeArticulo(articuloDTO);
+
+        ApiConexion.enviarRequestAsincrono("PUT", "articulos/" + articuloExistente.getCodigoArticulo(), jsonObject.toString(),
+                true, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(DetallesArticuloActivity.this, "Error al enviar solicitud",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String responseData = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject jsonResponse = new JSONObject(responseData);
+                                    Toast.makeText(DetallesArticuloActivity.this,
+                                            "Artículo actualizado correctamente", Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(DetallesArticuloActivity.this,
+                                            "Error al procesar respuesta", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+    }
+
+    private ArticuloDTO crearArticuloDesdeCampos() {
+        String nombreArticulo = textNombre.getText().toString().trim();
         String codigoArticulo = textCodigo.getText().toString().trim();
-        String descripcionArticulo  = textDescripcion.getText().toString().trim();
+        String descripcionArticulo = textDescripcion.getText().toString().trim();
         Double precioArticulo = Double.valueOf(textPrecio.getText().toString().trim());
         int categoriaArticulo = asignarIdCategoria();
         int colorArticulo = asignarIdColor();
@@ -208,11 +302,14 @@ public class DetallesArticuloActivity extends AppCompatActivity {
         articuloDTO.setPrecio(precioArticulo);
         articuloDTO.setIdColor(colorArticulo);
         articuloDTO.setIdCategoria(categoriaArticulo);
+        return articuloDTO;
+    }
 
+    private JSONObject crearJsonDesdeArticulo(ArticuloDTO articuloDTO) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("codigoArticulo", articuloDTO.getCodigoArticulo());
-            jsonObject.put("nombre",articuloDTO.getNombre());
+            jsonObject.put("nombre", articuloDTO.getNombre());
             jsonObject.put("descripcion", articuloDTO.getDescripcion());
             jsonObject.put("precio", articuloDTO.getPrecio());
             jsonObject.put("idColor", articuloDTO.getIdColor());
@@ -220,42 +317,8 @@ public class DetallesArticuloActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error al procesar los datos", Toast.LENGTH_SHORT).show();
-            return;
         }
-
-        ApiConexion.enviarRequestAsincrono("POST", "articulo", jsonObject.toString(),
-                true, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(DetallesArticuloActivity.this, "Error al enviar solicitud",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseData = response.body().string();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(responseData);
-                            Toast.makeText(DetallesArticuloActivity.this,
-                                    "Detalles bancarios guardados correctamente", Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(DetallesArticuloActivity.this,
-                                    "Error al procesar respuesta", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-
+        return jsonObject;
     }
 
     private int asignarIdCategoria() {
@@ -313,5 +376,68 @@ public class DetallesArticuloActivity extends AppCompatActivity {
 
         return colorId;
     }
+
+
+    private void llenarCamposConDatosExistentes(ArticuloDTO articulo) {
+        textCodigo.setText(articulo.getCodigoArticulo());
+        textNombre.setText(articulo.getNombre());
+        textDescripcion.setText(articulo.getDescripcion());
+        textPrecio.setText(String.valueOf(articulo.getPrecio()));
+        spinnerCategoria.setSelection(getCategoriaPosition(articulo.getIdCategoria()));
+        spinnerColor.setSelection(getColorPosition(articulo.getIdColor()));
+    }
+
+    private int getCategoriaPosition(int categoriaId) {
+        switch (categoriaId) {
+            case 1:
+                return 0;
+            case 2:
+                return 2;
+            case 3:
+                return 1;
+            case 4:
+                return 3;
+            default:
+                return 0;
+        }
+    }
+
+    private int getColorPosition(int colorId) {
+        switch (colorId) {
+            case 1:
+                return 0;
+            case 2:
+                return 1;
+            case 3:
+                return 2;
+            case 4:
+                return 3;
+            case 5:
+                return 4;
+            case 6:
+                return 5;
+            case 7:
+                return 6;
+            case 8:
+                return 7;
+            default:
+                return 0;
+        }
+    }
+
+
+    private String getPathFromUri(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            String path = cursor.getString(columnIndex);
+            cursor.close();
+            return path;
+        }
+        return null;
+    }
+
 
 }
