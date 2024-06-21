@@ -71,7 +71,7 @@ public class RegistrarArticuloActivity extends AppCompatActivity {
             }
         });
 
-        clienteGrpc = new ClienteGrpc("10.0.2.2:8080");
+        clienteGrpc = new ClienteGrpc("192.168.17.59:8080");
 
         List<String> categorias = new ArrayList<>();
         categorias.add("Superiores");

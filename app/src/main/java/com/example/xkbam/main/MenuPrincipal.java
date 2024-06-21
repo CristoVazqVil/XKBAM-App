@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.xkbam.main.MenuCuentaActivity;
 import com.example.xkbam.R;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.dto.ArticuloDTO;
@@ -138,24 +139,9 @@ public class MenuPrincipal extends AppCompatActivity {
             }
         });
 
-        ImageView imgAnadirArticulo = findViewById(R.id.imgAñadirArtículo);
-        ImageView imgReporteVentas = findViewById(R.id.imgVentas);
 
-        imgAnadirArticulo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuPrincipal.this, RegistrarArticuloActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        imgReporteVentas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuPrincipal.this, ReporteVentasActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     private void buscarArticuloPorTermino(String termino) {

@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.xkbam.main.MenuCuentaActivity;
 import com.example.xkbam.R;
 import com.example.xkbam.adapters.ArticuloAdapter;
 import com.example.xkbam.api.ApiConexion;

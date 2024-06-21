@@ -55,7 +55,7 @@
             <ImageView
                 android:id="@+id/mdeVideo"
                 android:layout_width="wrap_content"
-                android:layout_height="285dp"
+                android:layout_height="326dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="14dp"
                 android:scaleType="centerCrop"
@@ -114,40 +114,7 @@
                 android:gravity="center_vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:id="@+id/imgAñadirArtículo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/agregar"
-                    android:contentDescription="Agregar artículo"/>
 
-                <TextView
-                    android:id="@+id/lblAgregar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Agregar artículo"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="16dp"/>
-
-                <ImageView
-                    android:id="@+id/imgVentas"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/agregar"
-                    android:contentDescription="Historial de ventas"
-                    android:layout_marginStart="64dp"/>
-
-                <TextView
-                    android:id="@+id/lblVentas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Historial de ventas"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="16dp"/>
             </LinearLayout>
 
         </LinearLayout>

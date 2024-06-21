@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.xkbam.main.MenuCuentaActivity;
 import com.example.xkbam.R;
 import com.example.xkbam.api.ApiConexion;
 import com.example.xkbam.dto.ArticuloDTO;
@@ -85,9 +86,12 @@ public class DetallesArticulo extends AppCompatActivity {
         loadOpiniones(codigoArticulo);
         obtenerIdCarrito();
 
+        /*
         if (SesionSingleton.getInstance().getRol() == 2) {
             btnModificarArticulo.setVisibility(View.GONE);
         }
+
+                          */
 
         btnAñadirCarrito.setOnClickListener(v -> {
             String tallaSeleccionada = spinnerTallas.getSelectedItem().toString();
@@ -114,7 +118,9 @@ public class DetallesArticulo extends AppCompatActivity {
         });
 
         btnModificarArticulo.setOnClickListener(v -> {
-            // modificar
+            Intent intent = new Intent(DetallesArticulo.this, RegistrarArticuloActivity.class);
+            intent.putExtra("articulo", articulo);
+            startActivity(intent);
         });
 
         ImageView imgCarrito = findViewById(R.id.imgCarrito);

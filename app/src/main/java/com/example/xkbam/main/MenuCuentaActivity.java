@@ -1,4 +1,4 @@
-package com.example.xkbam;
+package com.example.xkbam.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.xkbam.R;
 import com.example.xkbam.main.MainActivity;
+import com.example.xkbam.main.MenuPrincipal;
+import com.example.xkbam.main.RegistrarArticuloActivity;
+import com.example.xkbam.main.ReporteVentasActivity;
 import com.example.xkbam.utilidades.SesionSingleton;
 
 public class MenuCuentaActivity extends AppCompatActivity {
@@ -40,7 +44,7 @@ public class MenuCuentaActivity extends AppCompatActivity {
         addressTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCuentaActivity.this, DetallesDireccionesActivity.class);
+                Intent intent = new Intent(MenuCuentaActivity.this, com.example.xkbam.DetallesDireccionesActivity.class);
                 startActivity(intent);
             }
         });
@@ -48,7 +52,7 @@ public class MenuCuentaActivity extends AppCompatActivity {
         accountTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCuentaActivity.this, DetallesBancariosActivity.class);
+                Intent intent = new Intent(MenuCuentaActivity.this, com.example.xkbam.DetallesBancariosActivity.class);
                 startActivity(intent);
             }
         });
@@ -56,7 +60,7 @@ public class MenuCuentaActivity extends AppCompatActivity {
         infoTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuCuentaActivity.this, DetallesUsuarioActivity.class);
+                Intent intent = new Intent(MenuCuentaActivity.this, com.example.xkbam.DetallesUsuarioActivity.class);
                 intent.putExtra("NUMBER", 2);
                 startActivity(intent);
             }
@@ -72,15 +76,15 @@ public class MenuCuentaActivity extends AppCompatActivity {
         addArticleTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MenuCuentaActivity.this, "Añadir Articulo fue presionado", Toast.LENGTH_SHORT).show();
-            }
+                Intent intent = new Intent(MenuCuentaActivity.this, RegistrarArticuloActivity.class);
+                startActivity(intent);            }
         });
 
         salesReportTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MenuCuentaActivity.this, "Reporte de Ventas fue presionado", Toast.LENGTH_SHORT).show();
-            }
+                Intent intent = new Intent(MenuCuentaActivity.this, ReporteVentasActivity.class);
+                startActivity(intent);            }
         });
     }
 
