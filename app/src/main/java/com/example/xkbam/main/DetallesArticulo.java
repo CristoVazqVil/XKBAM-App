@@ -1,5 +1,6 @@
 package com.example.xkbam.main;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -69,13 +70,13 @@ public class DetallesArticulo extends AppCompatActivity {
         btnModificarArticulo = findViewById(R.id.btnModificarArticulo);
 
         // Set up spinners
-        ArrayAdapter<String> tallasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"XS", "S", "M", "L", "XL"});
+        ArrayAdapter<String> tallasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"Seleccione una talla", "XS", "S", "M", "L", "XL"});
         spinnerTallas.setAdapter(tallasAdapter);
 
-        ArrayAdapter<Integer> cantidadesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+        ArrayAdapter<Integer> cantidadesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
         spinnerCantidad.setAdapter(cantidadesAdapter);
 
-        ArrayAdapter<Integer> calificacionesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new Integer[]{1, 2, 3, 4, 5});
+        ArrayAdapter<Integer> calificacionesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new Integer[]{0, 1, 2, 3, 4, 5});
         spinnerCalificacion.setAdapter(calificacionesAdapter);
 
         // Get article code from intent
@@ -93,20 +94,43 @@ public class DetallesArticulo extends AppCompatActivity {
 
         btnAñadirCarrito.setOnClickListener(v -> {
             String tallaSeleccionada = spinnerTallas.getSelectedItem().toString();
+            if (tallaSeleccionada.equals("Seleccione una talla")) {
+                Toast.makeText(DetallesArticulo.this, "Seleccione una talla válida", Toast.LENGTH_SHORT).show();
+                return;
+            }
             int cantidadSeleccionada = Integer.parseInt(spinnerCantidad.getSelectedItem().toString());
+            if (cantidadSeleccionada == 0) {
+                Toast.makeText(DetallesArticulo.this, "Seleccione una cantidad válida", Toast.LENGTH_SHORT).show();
+                return;
+            }
             añadirArticuloAlCarrito(codigoArticulo, tallaSeleccionada, cantidadSeleccionada);
         });
 
         btnEnviarOpinion.setOnClickListener(v -> {
             String comentario = txtComentario.getText().toString();
             int calificacion = Integer.parseInt(spinnerCalificacion.getSelectedItem().toString());
+            if (calificacion == 0) {
+                Toast.makeText(DetallesArticulo.this, "Seleccione una calificación válida", Toast.LENGTH_SHORT).show();
+                return;
+            }
             enviarOpinion(codigoArticulo, comentario, calificacion);
         });
 
         btnModificarArticulo.setOnClickListener(v -> {
             // Implement logic to modify the article
         });
+
+        ImageView imgCarrito = findViewById(R.id.imgCarrito);
+        imgCarrito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Abrir la actividad del carrito aquí
+                startActivity(new Intent(DetallesArticulo.this, Carrito.class));
+            }
+        });
     }
+
+
 
     private void loadArticuloData(String codigoArticulo) {
         ApiConexion.enviarRequestAsincrono("GET", "articulos/" + codigoArticulo, null, true, new Callback() {

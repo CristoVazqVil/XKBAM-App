@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Contenido principal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Top Bar -->
+            <LinearLayout
+                android:id="@+id/topBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@color/black">
+
+                <!-- Opciones -->
+                <ImageView
+                    android:id="@+id/imgOpciones"
+                    android:layout_width="66dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="Opciones"
+                    android:src="@drawable/opciones" />
+
+                <!-- Logo -->
+                <ImageView
+                    android:id="@+id/imgHome"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:contentDescription="Home"
+                    android:src="@drawable/logo" />
+
+                <!-- Carrito -->
+                <ImageView
+                    android:id="@+id/imgCarrito"
+                    android:layout_width="64dp"
+                    android:layout_marginTop="85dp"
+                    android:layout_height="53dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Carrito"
+                    android:src="@drawable/carrito" />
+            </LinearLayout>
+
+            <!-- Etiqueta Carrito -->
+            <TextView
+                android:id="@+id/labelCarrito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Carrito"
+                android:textSize="75sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="5dp"/>
+
+            <!-- Línea divisoria -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/black"
+                android:layout_margin="16dp"/>
+
+            <!-- Tabla de Artículos -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCarrito"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Total -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:id="@+id/labelTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total:"
+                    android:textSize="45sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/totalPrecio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="45sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="end"/>
+            </LinearLayout>
+
+            <!-- Botones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <Button
+                    android:id="@+id/btnComprar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comprar"
+                    android:padding="16dp"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/btnOk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OK"
+                    android:padding="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Menú lateral de opciones -->
+        <LinearLayout
+            android:id="@+id/navMenu"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+            android:background="@android:color/black">
+
+            <TextView
+                android:id="@+id/navItemTodo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Todo"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemSuperiores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Superiores"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemInferiores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Inferiores"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemAccesorios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Accesorios"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/navItemConjuntos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conjuntos"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+            <ImageView
+                android:id="@+id/imgCerrarOpciones"
+                android:layout_width="37dp"
+                android:layout_height="32dp"
+                android:src="@drawable/cerrar"
+                android:contentDescription="Cerrar menú"
+                android:padding="16dp"
+                android:layout_gravity="end"/>
+
+            <TextView
+                android:id="@+id/navItemCuenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cuenta"
+                android:textSize="30sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="300dp"/>
+        </LinearLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

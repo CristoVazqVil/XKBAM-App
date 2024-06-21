@@ -9,13 +9,17 @@ public class ArticuloCompraDTO {
     private int idCompra;
     private int idTalla;
 
-    // Getters and Setters
+    // Constructor vacío necesario para Gson
+    public ArticuloCompraDTO() {
+    }
+
+    // Getters y setters
     public int getIdArticuloCompra() {
         return idArticuloCompra;
     }
 
-    public void setIdArticuloCompra(int idArticuloCompra) {
-        this.idArticuloCompra = idArticuloCompra;
+    public void setIdArticuloCompra(int idArticuloCarrito) {
+        this.idArticuloCompra = idArticuloCarrito;
     }
 
     public int getCantidadArticulo() {
