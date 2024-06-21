@@ -18,6 +18,7 @@ import com.example.xkbam.utilidades.ClienteGrpc;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -97,11 +98,15 @@ public class ReporteVentasActivity extends AppCompatActivity {
 
         try {
             if (file != null) {
-                FileOutputStream fos = new FileOutputStream(getContentResolver().openFileDescriptor(file.getUri(), "w").getFileDescriptor());
-                String reportContent = generateReport(startDate, endDate);
-                fos.write(reportContent.getBytes());
-                fos.close();
-                Toast.makeText(this, "Reporte guardado correctamente", Toast.LENGTH_SHORT).show();
+                OutputStream outputStream = getContentResolver().openOutputStream(file.getUri());
+                if (outputStream != null) {
+                    String reportContent = generateReport(startDate, endDate);
+                    outputStream.write(reportContent.getBytes());
+                    outputStream.close();
+                    Toast.makeText(this, "Reporte guardado correctamente", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "No se pudo abrir el archivo para escribir", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(this, "No se pudo crear el archivo en la ubicación seleccionada", Toast.LENGTH_SHORT).show();
             }
@@ -110,9 +115,7 @@ public class ReporteVentasActivity extends AppCompatActivity {
             Toast.makeText(this, "Error al guardar el reporte", Toast.LENGTH_SHORT).show();
         }
     }
-
     private String generateReport(String startDate, String endDate) {
-        // Aquí puedes generar el contenido del reporte en formato de texto
         StringBuilder reportBuilder = new StringBuilder();
         reportBuilder.append("Reporte de ventas desde ")
                 .append(startDate)
@@ -120,7 +123,6 @@ public class ReporteVentasActivity extends AppCompatActivity {
                 .append(endDate)
                 .append("\n\n");
 
-        // Ejemplo de contenido del reporte
         reportBuilder.append("Total ventas: $5000\n");
         reportBuilder.append("Total clientes nuevos: 20\n");
         reportBuilder.append("Productos más vendidos: \n");

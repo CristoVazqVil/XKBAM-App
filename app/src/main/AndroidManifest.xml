@@ -37,7 +37,7 @@
             android:name=".main.MenuArticulos"
             android:exported="false" />
         <activity
-            android:name=".MenuCuentaActivity"
+            android:name=".main.MenuCuentaActivity"
             android:exported="false" />
         <activity
             android:name=".DetallesDireccionesActivity"
