@@ -208,7 +208,7 @@ public class RegistrarArticuloActivity extends AppCompatActivity {
         ArticuloDTO articuloDTO = crearArticuloDesdeCampos();
         JSONObject jsonObject = crearJsonDesdeArticulo(articuloDTO);
 
-        ApiConexion.enviarRequestAsincrono("POST", "articulo", jsonObject.toString(),
+        ApiConexion.enviarRequestAsincrono("POST", "articulos", jsonObject.toString(),
                 false, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
