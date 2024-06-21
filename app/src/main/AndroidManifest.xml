@@ -16,6 +16,12 @@
         android:theme="@style/Theme.XKBAM"
         tools:targetApi="31">
         <activity
+            android:name=".main.ReporteVentasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".main.RegistrarArticuloActivity"
+            android:exported="false" />
+        <activity
             android:name=".main.CompraRealizada"
             android:exported="false" />
         <activity
@@ -31,7 +37,7 @@
             android:name=".main.MenuArticulos"
             android:exported="false" />
         <activity
-            android:name=".MenuCuentaActivity"
+            android:name=".main.MenuCuentaActivity"
             android:exported="false" />
         <activity
             android:name=".DetallesDireccionesActivity"
