@@ -1,8 +1,6 @@
 syntax = "proto3";
 
 option java_package = "com.proto.xkbamproject";
-option java_outer_classname = "MultimediaProto";
-
 
 service MultimediaService {
     rpc uploadMultimedia(stream UploadMultimediaRequest) returns (UploadMultimediaResponse);

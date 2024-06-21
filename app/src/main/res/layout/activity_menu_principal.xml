@@ -61,17 +61,17 @@
             <ImageView
                 android:id="@+id/mdeVideo"
                 android:layout_width="wrap_content"
-                android:layout_height="400dp"
+                android:layout_height="342dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="14dp"
-                android:src="@drawable/valkyrae"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/valkyrae" />
 
             <!-- Título -->
             <TextView
                 android:id="@+id/lblTitulo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="75dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="18dp"
                 android:gravity="center"

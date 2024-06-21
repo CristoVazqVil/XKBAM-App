@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.xkbamproject.R;
+import com.example.xkbam.R;
 
 public class ModificarArticuloActivity extends AppCompatActivity {
 

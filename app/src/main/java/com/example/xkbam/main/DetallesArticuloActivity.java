@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import android.widget.AdapterView;
@@ -20,6 +23,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.xkbam.R;
+import com.example.xkbam.api.ApiConexion;
+import com.example.xkbam.dto.ArticuloDTO;
+import com.example.xkbam.dto.TarjetaBancariaDTO;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class DetallesArticuloActivity extends AppCompatActivity {
 
@@ -27,22 +40,26 @@ public class DetallesArticuloActivity extends AppCompatActivity {
     private String selectedCategory;
     private String selectedColor;
 
+    private EditText textCodigo, textNombre, textDescripcion, textPrecio;
+    private Spinner spinnerCategoria, spinnerColor;
+    private Button botonGuardar;
+    private ImageView imgArticulo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalles_articulo);
 
 
-        EditText textCodigo = findViewById(R.id.item_code);
-        EditText textNombre = findViewById(R.id.item_name);
-        EditText textDescripcion = findViewById(R.id.description);
-        Spinner spinnerCategoria = findViewById(R.id.category_spinner);
-        Spinner spinnerColor = findViewById(R.id.color_spinner);
-        EditText textPrecio = findViewById(R.id.price_item);
-        Button botonGuardar = findViewById(R.id.save_button);
+         textCodigo = findViewById(R.id.item_code);
+         textNombre = findViewById(R.id.item_name);
+         textDescripcion = findViewById(R.id.description);
+         spinnerCategoria = findViewById(R.id.category_spinner);
+         spinnerColor = findViewById(R.id.color_spinner);
+         textPrecio = findViewById(R.id.price_item);
+         botonGuardar = findViewById(R.id.save_button);
 
-
-        ImageView imgArticulo = findViewById(R.id.item_image);
+         imgArticulo = findViewById(R.id.item_image);
         imgArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +194,67 @@ public class DetallesArticuloActivity extends AppCompatActivity {
 
 
     private void registrarArticulo(){
+        String nombreArticulo =  textNombre.getText().toString().trim();
+        String codigoArticulo = textCodigo.getText().toString().trim();
+        String descripcionArticulo  = textDescripcion.getText().toString().trim();
+        Double precioArticulo = Double.valueOf(textPrecio.getText().toString().trim());
+        int categoriaArticulo = asignarIdCategoria();
+        int colorArticulo = asignarIdColor();
+
+        ArticuloDTO articuloDTO = new ArticuloDTO();
+        articuloDTO.setCodigoArticulo(codigoArticulo);
+        articuloDTO.setNombre(nombreArticulo);
+        articuloDTO.setDescripcion(descripcionArticulo);
+        articuloDTO.setPrecio(precioArticulo);
+        articuloDTO.setIdColor(colorArticulo);
+        articuloDTO.setIdCategoria(categoriaArticulo);
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("codigoArticulo", articuloDTO.getCodigoArticulo());
+            jsonObject.put("nombre",articuloDTO.getNombre());
+            jsonObject.put("descripcion", articuloDTO.getDescripcion());
+            jsonObject.put("precio", articuloDTO.getPrecio());
+            jsonObject.put("idColor", articuloDTO.getIdColor());
+            jsonObject.put("idCategoria", articuloDTO.getIdCategoria());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al procesar los datos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ApiConexion.enviarRequestAsincrono("POST", "articulo", jsonObject.toString(),
+                true, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(DetallesArticuloActivity.this, "Error al enviar solicitud",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseData = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(responseData);
+                            Toast.makeText(DetallesArticuloActivity.this,
+                                    "Detalles bancarios guardados correctamente", Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(DetallesArticuloActivity.this,
+                                    "Error al procesar respuesta", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
 
     }
 
